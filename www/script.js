@@ -1,11 +1,30 @@
 window.addEventListener("load", () => {
+  const alertElem = document.getElementById("alert");
+
   const emailElem = document.getElementById("email");
   const codeElem = document.getElementById("code");
   const submitElem = document.getElementById("submit");
 
+  const setAlert = (text, isError) => {
+    if (!text) {
+      alertElem.className = "";
+      return;
+    }
+
+    alertElem.innerText = text;
+    alertElem.classList.toggle("success", !isError);
+    alertElem.classList.toggle("error", isError);
+    alertElem.classList.add("show");
+  };
+
   submitElem.addEventListener("click", () => {
+    if (!emailElem.value || !codeElem.value) {
+      return setAlert("Please fill in all fields.", true);
+    }
+
     submitElem.innerText = "Loading...";
     submitElem.disabled = true;
+    setAlert(null);
 
     fetch("/decal-attendance/track", {
       method: "POST",
@@ -21,15 +40,15 @@ window.addEventListener("load", () => {
       .then((res) => res.json())
       .then((res) => {
         if (res.success) {
-          alert("Attendance logged.");
+          setAlert("Attendance logged.", false);
         } else {
           console.error(res.error);
-          alert(`Something went wrong: ${res.error}.`);
+          setAlert(res.error, true);
         }
       })
       .catch((err) => {
         console.error(err);
-        alert(`Something went wrong: ${err}.`);
+        setAlert(`An error occurred: ${err}`, true);
       })
       .finally(() => {
         submitElem.innerText = "Submit";

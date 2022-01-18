@@ -3,6 +3,7 @@ from flask import Flask, jsonify, request
 import pygsheets
 import re
 from itertools import chain
+import datetime
 
 from config import *
 
@@ -73,7 +74,7 @@ def track():
         if code_col_index < 0:
             return error_invalid_code()
 
-        # Update target cell with "y".
+        # Update target cell with current date/time.
 
         sheet.update_value(
             # start row/col are 1-indexed already, so no need to add 1 here
@@ -81,7 +82,7 @@ def track():
                 EMAILS_ROW_START + email_row_index,
                 CODES_COL_START + code_col_index,
             ),
-            "y",
+            datetime.now().strftime("%m/%d %H:%M"),
         )
 
         # Return success.

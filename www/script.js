@@ -1,8 +1,12 @@
 window.addEventListener("load", () => {
   const emailElem = document.getElementById("email");
   const codeElem = document.getElementById("code");
+  const submitElem = document.getElementById("submit");
 
-  document.getElementById("submit").addEventListener("click", () =>
+  submitElem.addEventListener("click", () => {
+    submitElem.innerText = "Loading...";
+    submitElem.disabled = true;
+
     fetch("/decal-attendance/track", {
       method: "POST",
       headers: {
@@ -27,5 +31,9 @@ window.addEventListener("load", () => {
         console.error(err);
         alert(`Something went wrong: ${err}.`);
       })
-  );
+      .finally(() => {
+        submitElem.innerText = "Submit";
+        submitElem.disabled = false;
+      });
+  });
 });

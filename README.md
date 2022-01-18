@@ -35,6 +35,15 @@ Flask webserver to automatically record attendance in a spreadsheet given an ema
    EMAIL_RANGE=A3:A5
    # row of codes
    CODE_RANGE=B2:B6
+
+   MAIL_SERVER=smtp.gmail.com
+   MAIL_PORT=465
+   MAIL_USERNAME=email@gmail.com
+   MAIL_PASSWORD=password
+   MAIL_USE_TLS=False
+   MAIL_USE_SSL=True
+   MAIL_DEFAULT_SENDER_NAME=Name
+   MAIL_DEFAULT_SENDER_EMAIL=email@gmail.com
    ```
 
 ## Example Spreadsheet

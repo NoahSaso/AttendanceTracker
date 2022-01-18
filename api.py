@@ -115,7 +115,7 @@ def track():
 
         # Return success.
 
-        logging.info(f"Logged attendance for {email} with {code}.")
+        logging.info(f"Logged attendance for {email}. Code: {code}")
 
         return jsonify(success=True)
 

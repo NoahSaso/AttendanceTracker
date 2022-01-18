@@ -1,5 +1,6 @@
 import traceback
 from flask import Flask, jsonify, request
+from flask_mail import Mail, Message
 import pygsheets
 import re
 from itertools import chain
@@ -8,6 +9,19 @@ from datetime import datetime
 from config import *
 
 app = Flask(__name__)
+# config mail
+app.config["MAIL_SERVER"] = MAIL_SERVER
+app.config["MAIL_PORT"] = MAIL_PORT
+app.config["MAIL_USERNAME"] = MAIL_USERNAME
+app.config["MAIL_PASSWORD"] = MAIL_PASSWORD
+app.config["MAIL_USE_TLS"] = MAIL_USE_TLS
+app.config["MAIL_USE_SSL"] = MAIL_USE_SSL
+app.config["MAIL_DEFAULT_SENDER"] = (
+    MAIL_DEFAULT_SENDER_NAME,
+    MAIL_DEFAULT_SENDER_EMAIL,
+)
+mail = Mail(app)
+# config google
 gc = pygsheets.authorize(service_account_file=SERVICE_ACCOUNT)
 sheet: pygsheets.Worksheet = gc.open_by_key(SPREADSHEET_ID).sheet1
 
@@ -76,14 +90,24 @@ def track():
 
         # Update target cell with current date/time.
 
+        datetime_str = datetime.now().strftime("%m/%d %H:%M")
         sheet.update_value(
             # start row/col are 1-indexed already, so no need to add 1 here
             (
                 EMAILS_ROW_START + email_row_index,
                 CODES_COL_START + code_col_index,
             ),
-            datetime.now().strftime("%m/%d %H:%M"),
+            datetime_str,
         )
+
+        # Email confirmation to student.
+
+        msg = Message(
+            recipients=[email],
+            subject="ItPS DeCal Attendance",
+            body=f"Your attendance was logged at {datetime_str}.\nThanks for showing up!",
+        )
+        mail.send(msg)
 
         # Return success.
 

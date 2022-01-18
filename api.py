@@ -50,8 +50,10 @@ def track():
         # Validate parameters.
 
         if not email or not re.match(EMAIL_REGEX, email):
+            logger.info(f"Invalid email: {email}")
             return error_invalid_email_address()
         if not code:
+            logger.info(f"Invalid code: {code}")
             return error_invalid_code()
 
         # Get emails and codes from spreadsheet.
@@ -78,6 +80,7 @@ def track():
         except ValueError:
             pass
         if email_row_index < 0:
+            logger.info(f"Invalid email: {email}")
             return error_invalid_email_address()
 
         code_col_index = -1
@@ -86,6 +89,7 @@ def track():
         except ValueError:
             pass
         if code_col_index < 0:
+            logger.info(f"Invalid code: {code}")
             return error_invalid_code()
 
         # Update target cell with current date/time.
@@ -111,9 +115,12 @@ def track():
 
         # Return success.
 
+        logging.info(f"Logged attendance for {email} with {code}.")
+
         return jsonify(success=True)
 
     except Exception as err:
+        logger.critical(f"{err}\n{traceback.format_exc()}")
         print(err)
         print(traceback.print_exc())
         return jsonify(success=False, error="An unexpected error occurred :("), 500

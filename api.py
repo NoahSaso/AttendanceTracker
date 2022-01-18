@@ -29,8 +29,8 @@ def track():
     try:
         # Extract parameters.
 
-        email = request.form.get("email", "").strip().lower()
-        code = request.form.get("code", "").strip().lower()
+        email = request.json.get("email", "").strip().lower()
+        code = request.json.get("code", "").strip().lower()
 
         # Validate parameters.
 

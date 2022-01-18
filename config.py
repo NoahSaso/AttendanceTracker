@@ -1,7 +1,10 @@
 from dotenv import load_dotenv
 import os
 
-load_dotenv()
+# load explicitly from the same directory as this file
+load_dotenv(
+    dotenv_path=os.path.join(os.path.abspath(os.path.dirname(__file__)), ".env")
+)
 
 SPREADSHEET_ID = os.getenv("SPREADSHEET_ID")
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]

@@ -3,7 +3,7 @@ from flask import Flask, jsonify, request
 import pygsheets
 import re
 from itertools import chain
-import datetime
+from datetime import datetime
 
 from config import *
 

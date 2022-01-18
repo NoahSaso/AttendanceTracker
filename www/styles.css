@@ -1,0 +1,20 @@
+#container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+label {
+  display: none;
+}
+
+input {
+  margin-bottom: 1rem;
+}
+
+#submit {
+  border: none;
+  padding: 8px 18px;
+  border-radius: 4px;
+}

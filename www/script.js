@@ -22,7 +22,7 @@ window.addEventListener("load", () => {
       return setAlert("Please fill in all fields.", true);
     }
 
-    submitElem.innerText = "Loading...";
+    submitElem.innerText = "Submitting...";
     submitElem.disabled = true;
     setAlert(null);
 

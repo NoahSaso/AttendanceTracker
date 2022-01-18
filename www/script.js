@@ -3,7 +3,7 @@ window.addEventListener("load", () => {
   const codeElem = document.getElementById("code");
 
   document.getElementById("submit").addEventListener("click", () =>
-    fetch("/decal-attendance/track", {
+    fetch("/decal-attendance/api/track", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

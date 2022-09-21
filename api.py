@@ -104,14 +104,15 @@ def track():
             datetime_str,
         )
 
-        # Email confirmation to student.
+        # for now, disable. Google disallows less secure apps now. Need to use oauth login.
+#         # Email confirmation to student.
 
-        msg = Message(
-            recipients=[email],
-            subject="ItPS DeCal Attendance",
-            body=f"Your attendance was logged at {datetime_str}.\nThanks for showing up!",
-        )
-        mail.send(msg)
+#         msg = Message(
+#             recipients=[email],
+#             subject="ItPS DeCal Attendance",
+#             body=f"Your attendance was logged at {datetime_str}.\nThanks for showing up!",
+#         )
+#         mail.send(msg)
 
         # Return success.
 
